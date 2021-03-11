@@ -66,16 +66,6 @@ namespace Library_Management_System
         {
         }
 
-        private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            toolStrip.Visible = toolBarToolStripMenuItem.Checked;
-        }
-
-        private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            statusStrip.Visible = statusBarToolStripMenuItem.Checked;
-        }
-
         private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LayoutMdi(MdiLayout.Cascade);
@@ -102,6 +92,12 @@ namespace Library_Management_System
             {
                 childForm.Close();
             }
+        }
+
+        private void addBooks_Click(object sender, EventArgs e)
+        {
+            add_books addBooksForm = new add_books();
+            addBooksForm.Show();
         }
     }
 }
