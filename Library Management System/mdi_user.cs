@@ -99,5 +99,11 @@ namespace Library_Management_System
             add_books addBooksForm = new add_books();
             addBooksForm.Show();
         }
+
+        private void viewBooksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            view_books viewBooks = new view_books();
+            viewBooks.Show();
+        }
     }
 }

@@ -23,21 +23,37 @@ namespace Library_Management_System
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            connection.Open();
-
-            SqlCommand command = connection.CreateCommand();
-            command.CommandType = CommandType.Text;
-            command.CommandText = "INSERT INTO books_info VALUES('"+nameBox.Text+"','"+authorBox.Text+"','"+dateBox.Text+"','"+pagesBox.Text+"','"+priceBox.Text+"','"+quantityBox.Text+"')";
-            command.ExecuteNonQuery();
-            connection.Close();
-
+            TryCatchBookSaveToDataBase();
+            ClearAddBookView();
+        }
+        private void ClearAddBookView()
+        {
             nameBox.Text = "";
             authorBox.Text = "";
-            dateBox.Text = "";
             pagesBox.Text = "";
             priceBox.Text = "";
             quantityBox.Text = "";
-
+        }
+        private void TryCatchBookSaveToDataBase()
+        {
+            try
+            {
+                SaveBookToDataBase();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                this.Close();
+            }
+        }
+        private void SaveBookToDataBase()
+        {
+            connection.Open();
+            SqlCommand command = connection.CreateCommand();
+            command.CommandType = CommandType.Text;
+            command.CommandText = "INSERT INTO books_info VALUES('" + nameBox.Text + "','" + authorBox.Text + "','" + dateTimePicker1.Value.ToString("MM/dd/yyyy") + "','" + pagesBox.Text + "','" + priceBox.Text + "','" + quantityBox.Text + "')";
+            command.ExecuteNonQuery();
+            connection.Close();
             MessageBox.Show("Books added successfully!");
         }
     }

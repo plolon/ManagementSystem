@@ -31,15 +31,39 @@ namespace Library_Management_System
 
         private void loginButton_Click(object sender, EventArgs e)
         {
+
+            TryCatchLogin();
+
+        }
+
+        private void TryCatchLogin()
+        {
+            try
+            {
+                LoginToDataBase();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void LoginToDataBase()
+        {
             SqlCommand command = connection.CreateCommand();
             command.CommandType = CommandType.Text;
-            command.CommandText = "SELECT * FROM library_person WHERE username = '"+ textBox1.Text +"' AND password = '"+ textBox2.Text+"'";
+            command.CommandText = "SELECT * FROM library_person WHERE username = '" + textBox1.Text + "' AND password = '" + textBox2.Text + "'";
             command.ExecuteNonQuery();
             DataTable dataTable = new DataTable();
             SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
             dataAdapter.Fill(dataTable);
             count = Convert.ToInt32(dataTable.Rows.Count.ToString());
-            if (count == 0)
+            CheckPasswordAndLogin(count);
+        }
+
+        private void CheckPasswordAndLogin(int AccountId)
+        {
+            if (AccountId == 0)
             {
                 MessageBox.Show("Username and Password doesn't match!");
             }
@@ -49,7 +73,6 @@ namespace Library_Management_System
                 mdi_user mdiUser = new mdi_user();
                 mdiUser.Show();
             }
-
         }
     }
 }

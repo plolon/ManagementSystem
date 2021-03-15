@@ -41,7 +41,7 @@ namespace Library_Management_System
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
-            this.dateBox = new System.Windows.Forms.TextBox();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // nameBox
@@ -145,18 +145,20 @@ namespace Library_Management_System
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
-            // dateBox
+            // dateTimePicker1
             // 
-            this.dateBox.Location = new System.Drawing.Point(118, 110);
-            this.dateBox.Name = "dateBox";
-            this.dateBox.Size = new System.Drawing.Size(213, 20);
-            this.dateBox.TabIndex = 2;
+            this.dateTimePicker1.Location = new System.Drawing.Point(120, 113);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(211, 20);
+            this.dateTimePicker1.TabIndex = 13;
+            this.dateTimePicker1.Value = new System.DateTime(2021, 3, 12, 22, 27, 35, 0);
             // 
             // add_books
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(373, 330);
+            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -167,7 +169,6 @@ namespace Library_Management_System
             this.Controls.Add(this.quantityBox);
             this.Controls.Add(this.priceBox);
             this.Controls.Add(this.pagesBox);
-            this.Controls.Add(this.dateBox);
             this.Controls.Add(this.authorBox);
             this.Controls.Add(this.nameBox);
             this.Name = "add_books";
@@ -191,6 +192,6 @@ namespace Library_Management_System
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button saveButton;
-        private System.Windows.Forms.TextBox dateBox;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }
