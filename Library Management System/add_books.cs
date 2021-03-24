@@ -51,7 +51,9 @@ namespace Library_Management_System
             connection.Open();
             SqlCommand command = connection.CreateCommand();
             command.CommandType = CommandType.Text;
-            command.CommandText = "INSERT INTO books_info VALUES('" + nameBox.Text + "','" + authorBox.Text + "','" + dateTimePicker1.Value.ToString("MM/dd/yyyy") + "','" + pagesBox.Text + "','" + priceBox.Text + "','" + quantityBox.Text + "')";
+            command.CommandText = "INSERT INTO books_info VALUES('" + nameBox.Text + "','" + authorBox.Text 
+                + "','" + dateTimePicker1.Value.ToString("MM/dd/yyyy") + "','" + pagesBox.Text + "','" + priceBox.Text
+                + "','" + quantityBox.Text + "')";
             command.ExecuteNonQuery();
             connection.Close();
             MessageBox.Show("Books added successfully!");

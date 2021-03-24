@@ -22,21 +22,21 @@ namespace Library_Management_System
 
         private void view_books_Load(object sender, EventArgs e)
         {
-            TryCatchViewBooks("SELECT * FROM books_info;");
+            TryCatchViewBooks("SELECT * FROM books_info;", false);
         }
 
-        private void TryCatchViewBooks(string commandText)
+        private void TryCatchViewBooks(string commandText, bool load)
         {
             try
             {
-                LoadViewBooksGrid(commandText);
+                LoadViewBooksGrid(commandText, load);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
-        private void LoadViewBooksGrid(string commandText)
+        private void LoadViewBooksGrid(string commandText, bool load)
         {
             connection.Open();
             SqlCommand command = connection.CreateCommand();
@@ -48,7 +48,7 @@ namespace Library_Management_System
             dataAdapter.Fill(dataTable);
             dataGridView1.DataSource = dataTable;
             connection.Close();
-            NoBooksFound(Convert.ToInt32(dataTable.Rows.Count.ToString()));
+            if (load) FillTextboxes(dataTable);
         }
 
         private void NoBooksFound(int numberOfBooks)
@@ -59,9 +59,45 @@ namespace Library_Management_System
             }    
         }
 
-        private void searchBookBox_KeyUp(object sender, KeyEventArgs e)
+        private void searchByNameTextbox_KeyUp(object sender, KeyEventArgs e)
         {
-            TryCatchViewBooks("SELECT * FROM books_info WHERE books_name like('%" + searchBookBox.Text + "%')");
+            TryCatchViewBooks("SELECT * FROM books_info WHERE books_name like('%" + searchByNameTextbox.Text + "%')", false);
+        }
+
+        private void searchByAuthorTextbox_KeyUp(object sender, KeyEventArgs e)
+        {
+            TryCatchViewBooks("SELECT * FROM books_info WHERE author_name = '%" + searchByAuthorTextbox.Text + "%'", false);
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            panel2.Visible = true;
+            int id = Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString());
+            TryCatchViewBooks("SELECT * FROM books_info WHERE ID = " + id + ";", true);
+            
+        }
+
+        private void FillTextboxes(DataTable dataTable)
+        {
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                booksNameTextbox.Text = dataRow["books_name"].ToString();
+                authorNameTextbox.Text = dataRow["author_name"].ToString();
+                publicationDateTimepicker.Value = Convert.ToDateTime(dataRow["publication_date"].ToString());
+                pagesNumberTextbox.Text = dataRow["pages_number"].ToString();
+                priceTextbox.Text = dataRow["price"].ToString();
+                quantityTextbox.Text = dataRow["books_quantity"].ToString();
+            }
+        }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString());
+            TryCatchViewBooks("UPDATE books_info SET books_name = '" + booksNameTextbox.Text + "', author_name = '" + authorNameTextbox.Text + "', " +
+                    "publication_date = '" + publicationDateTimepicker.Value.ToString("MM/dd/yyyy") + "', pages_number = '" + pagesNumberTextbox.Text + "'," +
+                    "price = '" + priceTextbox.Text + "', books_quantity = '" + quantityTextbox.Text + "' WHERE ID='" + id + "';", false);
+            TryCatchViewBooks("SELECT * FROM books_info;", false);
+            MessageBox.Show("Books updated successfully");
         }
     }
 }
